@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html lang="cs">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reality Kalkulačka Pro - MEVERIK SOLUTION</title>
+<link href="styles.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="theme-light">
+<!-- Header -->
+<header class="header">
+<div class="header-content">
+<div class="brand">
+<div class="logo">
+<i class="fas fa-calculator"></i>
+</div>
+<div class="brand-text">
+<h1>Reality Kalkulačka Pro</h1>
+<span>MEVERIK SOLUTION</span>
+</div>
+</div>
+<nav class="nav">
+<a class="nav-item active" href="#project">
+<i class="fas fa-folder-open"></i>
+<span>Projekt</span>
+</a>
+<a class="nav-item" href="#properties">
+<i class="fas fa-home"></i>
+<span>Nemovitosti</span>
+</a>
+<a class="nav-item" href="#analysis">
+<i class="fas fa-chart-line"></i>
+<span>Analýza</span>
+</a>
+<a class="nav-item" href="#reports">
+<i class="fas fa-file-alt"></i>
+<span>Reporty</span>
+</a>
+</nav>
+<div class="header-actions">
+<button class="btn btn-secondary" id="importBtn">
+<i class="fas fa-upload"></i>
+                    Import
+                </button>
+<button class="btn btn-secondary" id="exportBtn">
+<i class="fas fa-download"></i>
+                    Export
+                </button>
+<button class="btn btn-primary" id="generateReportBtn">
+<i class="fas fa-file-pdf"></i>
+                    Generovat Report
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="main">
+<!-- Sidebar -->
+<aside class="sidebar">
+<div class="sidebar-section">
+<h3>Aktuální Projekt</h3>
+<div class="project-info">
+<div class="project-name" id="projectName">Nový Projekt</div>
+<div class="project-stats">
+<div class="stat">
+<span class="stat-label">Nemovitostí:</span>
+<span class="stat-value" id="propertyCount">0</span>
+</div>
+<div class="stat">
+<span class="stat-label">Celková hodnota:</span>
+<span class="stat-value" id="totalValue">0 Kč</span>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebar-section">
+<h3>Rychlé Akce</h3>
+<div class="quick-actions">
+<button class="btn btn-outline" id="addPropertyBtn">
+<i class="fas fa-plus"></i>
+                        Přidat Nemovitost
+                    </button>
+<button class="btn btn-outline" id="cadastralSearchBtn">
+<i class="fas fa-search"></i>
+                        Katastrální Vyhledávání
+                    </button>
+<button class="btn btn-outline" id="marketAnalysisBtn">
+<i class="fas fa-chart-bar"></i>
+                        Tržní Analýza
+                    </button>
+</div>
+</div>
+<div class="sidebar-section">
+<h3>Cenové Trendy</h3>
+<div class="price-trends">
+<canvas height="150" id="trendChart" width="280"></canvas>
+</div>
+</div>
+</aside>
+<!-- Content Area -->
+<div class="content">
+<!-- Project Tab -->
+<section class="tab-content active" id="project">
+<div class="content-header">
+<h2>Nastavení Projektu</h2>
+<p>Základní informace o projektu a společnosti</p>
+</div>
+<div class="form-grid">
+<div class="form-group">
+<label for="projectNameInput">Název projektu</label>
+<input id="projectNameInput" placeholder="Např. Investice Brno 2024" type="text"/>
+</div>
+<div class="form-group">
+<label for="projectDate">Datum ocenění</label>
+<input id="projectDate" type="date"/>
+</div>
+<div class="form-group">
+<label for="companyName">Název společnosti</label>
+<input id="companyName" placeholder="MEVERIK SOLUTION s.r.o." type="text"/>
+</div>
+<div class="form-group">
+<label for="companyIco">IČO</label>
+<input id="companyIco" placeholder="12345678" type="text"/>
+</div>
+<div class="form-group full-width">
+<label for="companyAddress">Adresa společnosti</label>
+<input id="companyAddress" placeholder="Ulice 123, 123 45 Město" type="text"/>
+</div>
+<div class="form-group full-width">
+<label for="projectNotes">Poznámky k projektu</label>
+<textarea id="projectNotes" placeholder="Dodatečné informace o projektu..." rows="3"></textarea>
+</div>
+</div>
+</section>
+<!-- Properties Tab -->
+<section class="tab-content" id="properties">
+<div class="content-header">
+<h2>Správa Nemovitostí</h2>
+<p>Přidávejte a spravujte nemovitosti v rámci projektu</p>
+<button class="btn btn-primary" id="addNewPropertyBtn">
+<i class="fas fa-plus"></i>
+                        Přidat Nemovitost
+                    </button>
+</div>
+<div class="properties-list" id="propertiesList">
+<!-- Properties will be dynamically added here -->
+</div>
+</section>
+<!-- Analysis Tab -->
+<section class="tab-content" id="analysis">
+<div class="content-header">
+<h2>Tržní Analýza</h2>
+<p>Analýza trhu a cenových trendů</p>
+</div>
+<div class="analysis-grid">
+<div class="analysis-card">
+<h3>Cenové Trendy</h3>
+<canvas height="200" id="priceChart" width="400"></canvas>
+</div>
+<div class="analysis-card">
+<h3>Regionální Srovnání</h3>
+<div class="region-comparison" id="regionComparison">
+<!-- Regional data will be populated here -->
+</div>
+</div>
+<div class="analysis-card">
+<h3>Katastrální Mapa</h3>
+<div class="map-container" id="mapContainer">
+<div class="map-placeholder">
+<i class="fas fa-map"></i>
+<p>Mapa se načte po zadání adresy</p>
+</div>
+</div>
+</div>
+<div class="analysis-card">
+<h3>Investiční Metriky</h3>
+<div class="metrics-grid">
+<div class="metric">
+<span class="metric-label">ROI (5 let)</span>
+<span class="metric-value" id="roiValue">-</span>
+</div>
+<div class="metric">
+<span class="metric-label">Payback Period</span>
+<span class="metric-value" id="paybackValue">-</span>
+</div>
+<div class="metric">
+<span class="metric-label">IRR</span>
+<span class="metric-value" id="irrValue">-</span>
+</div>
+<div class="metric">
+<span class="metric-label">Cap Rate</span>
+<span class="metric-value" id="capRateValue">-</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Reports Tab -->
+<section class="tab-content" id="reports">
+<div class="content-header">
+<h2>Reporty a Export</h2>
+<p>Generování a export reportů</p>
+</div>
+<div class="reports-grid">
+<div class="report-card">
+<div class="report-icon">
+<i class="fas fa-file-pdf"></i>
+</div>
+<h3>Souhrnný Report</h3>
+<p>Kompletní analýza všech nemovitostí v projektu</p>
+<button class="btn btn-primary" id="generateSummaryBtn">Generovat</button>
+</div>
+<div class="report-card">
+<div class="report-icon">
+<i class="fas fa-chart-line"></i>
+</div>
+<h3>Investiční Analýza</h3>
+<p>Detailní investiční metriky a projekce</p>
+<button class="btn btn-primary" id="generateInvestmentBtn">Generovat</button>
+</div>
+<div class="report-card">
+<div class="report-icon">
+<i class="fas fa-map-marked-alt"></i>
+</div>
+<h3>Katastrální Report</h3>
+<p>Informace z katastru nemovitostí</p>
+<button class="btn btn-primary" id="generateCadastralBtn">Generovat</button>
+</div>
+<div class="report-card">
+<div class="report-icon">
+<i class="fas fa-file-excel"></i>
+</div>
+<h3>Excel Export</h3>
+<p>Export dat do Excel formátu</p>
+<button class="btn btn-primary" id="exportExcelBtn">Export</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Modals -->
+<!-- Property Modal -->
+<div class="modal" id="propertyModal">
+<div class="modal-content">
+<div class="modal-header">
+<h3>Přidat/Upravit Nemovitost</h3>
+<button class="modal-close" id="closePropertyModal">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<div class="form-grid">
+<div class="form-group">
+<label for="propertyAddress">Adresa</label>
+<input id="propertyAddress" placeholder="Ulice 123, Město" type="text"/>
+</div>
+<div class="form-group">
+<label for="cadastralNumber">Parcelní číslo</label>
+<input id="cadastralNumber" placeholder="123/4" type="text"/>
+</div>
+<div class="form-group">
+<label for="cadastralTerritory">Katastrální území</label>
+<input id="cadastralTerritory" placeholder="Město" type="text"/>
+</div>
+<div class="form-group">
+<label for="propertyType">Typ nemovitosti</label>
+<select id="propertyType">
+<option value="rodinny">Rodinný dům</option>
+<option value="byt">Byt</option>
+<option value="bytovy">Bytový dům</option>
+<option value="komercni">Komerční</option>
+<option value="pozemek">Pozemek</option>
+<option value="ostatni">Ostatní</option>
+</select>
+</div>
+<div class="form-group">
+<label for="propertyArea">Užitná plocha (m²)</label>
+<input id="propertyArea" min="0" placeholder="120" type="number"/>
+</div>
+<div class="form-group">
+<label for="landArea">Výměra pozemku (m²)</label>
+<input id="landArea" min="0" placeholder="800" type="number"/>
+</div>
+<div class="form-group">
+<label for="propertyCondition">Stav</label>
+<select id="propertyCondition">
+<option value="new">Novostavba</option>
+<option value="reno">Po rekonstrukci</option>
+<option value="avg">Standard</option>
+<option value="old">Původní stav</option>
+</select>
+</div>
+<div class="form-group">
+<label for="propertyZone">Zóna/lokalita</label>
+<select id="propertyZone">
+<option value="A">A - top</option>
+<option selected="" value="B">B - dobrá</option>
+<option value="C">C - průměr</option>
+<option value="D">D - slabší</option>
+</select>
+</div>
+<div class="form-group full-width">
+<label for="propertyNotes">Poznámky</label>
+<textarea id="propertyNotes" placeholder="Dodatečné informace..." rows="3"></textarea>
+</div>
+</div>
+<div class="cadastral-search">
+<h4>Automatické načtení z katastru</h4>
+<div class="search-form">
+<input id="searchCadastral" placeholder="Zadejte parcelní číslo a obec" type="text"/>
+<button class="btn btn-secondary" id="searchCadastralBtn">
+<i class="fas fa-search"></i>
+                            Vyhledat
+                        </button>
+</div>
+<div class="search-results" id="cadastralResults"></div>
+</div>
+</div>
+<div class="modal-footer">
+<button class="btn btn-secondary" id="cancelPropertyBtn">Zrušit</button>
+<button class="btn btn-primary" id="savePropertyBtn">Uložit</button>
+</div>
+</div>
+</div>
+<!-- Import/Export Modal -->
+<div class="modal" id="importExportModal">
+<div class="modal-content">
+<div class="modal-header">
+<h3>Import/Export Dat</h3>
+<button class="modal-close" id="closeImportExportModal">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<div class="import-export-tabs">
+<button class="tab-btn active" data-tab="import">Import</button>
+<button class="tab-btn" data-tab="export">Export</button>
+</div>
+<div class="tab-content-area">
+<div class="tab-pane active" id="import">
+<div class="import-options">
+<div class="import-option">
+<h4>JSON soubor</h4>
+<input accept=".json" id="jsonFileInput" type="file"/>
+<button class="btn btn-secondary" id="loadJsonBtn">Načíst JSON</button>
+</div>
+<div class="import-option">
+<h4>Katastrální data</h4>
+<textarea id="cadastralDataInput" placeholder="Vložte katastrální data ve formátu JSON..."></textarea>
+<button class="btn btn-secondary" id="importCadastralBtn">Importovat</button>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="export">
+<div class="export-options">
+<div class="export-option">
+<h4>JSON export</h4>
+<p>Export všech dat projektu do JSON formátu</p>
+<button class="btn btn-primary" id="exportJsonBtn">Stáhnout JSON</button>
+</div>
+<div class="export-option">
+<h4>Excel export</h4>
+<p>Export do Excel tabulky s analýzou</p>
+<button class="btn btn-primary" id="exportExcelBtnModal">Stáhnout Excel</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Report Modal -->
+<div class="modal" id="reportModal">
+<div class="modal-content large">
+<div class="modal-header">
+<h3>Náhled Reportu</h3>
+<div class="modal-actions">
+<button class="btn btn-secondary" id="printReportBtn">
+<i class="fas fa-print"></i>
+                        Tisk
+                    </button>
+<button class="btn btn-primary" id="downloadReportBtn">
+<i class="fas fa-download"></i>
+                        Stáhnout PDF
+                    </button>
+<button class="modal-close" id="closeReportModal">
+<i class="fas fa-times"></i>
+</button>
+</div>
+</div>
+<div class="modal-body">
+<div class="report-content" id="reportContent">
+<!-- Report content will be generated here -->
+</div>
+</div>
+</div>
+</div>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+<div class="loading-spinner">
+<i class="fas fa-spinner fa-spin"></i>
+<p>Načítám data...</p>
+</div>
+</div>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

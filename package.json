@@ -1,0 +1,22 @@
+{
+  "name": "reality-kalkulacka-pro",
+  "version": "4.0.0",
+  "description": "Moderní webová aplikace pro ocenění nemovitostí - MEVERIK SOLUTION",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "reality",
+    "kalkulacka",
+    "oceneni",
+    "nemovitosti",
+    "meverik"
+  ],
+  "author": "MEVERIK SOLUTION",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
