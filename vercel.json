@@ -1,15 +1,14 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "echo 'No build needed for static site'",
+  "installCommand": "echo 'No dependencies to install'",
+  "outputDirectory": "./",
+  "framework": "static",
+  "public": true,
+  "rewrites": [
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
